@@ -100,4 +100,3 @@ app.get('/:fox', (req, res) => {
 
 [Preact]: https://github.com/developit/preact
 [MIT]: http://choosealicense.com/licenses/mit/
-
