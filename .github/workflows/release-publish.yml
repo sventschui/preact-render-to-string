@@ -11,7 +11,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
       with:
-        # checkout what ever was selected in GH while creating the release
+        # checkout whatever was selected in GH while creating the release
         # Note that this current MUST be a branch, see TODO below
         ref: ${{ github.event.release.target_commitish }}
     - name: Use Node.js 12
