@@ -48,8 +48,9 @@ jobs:
         asset_content_type: application/zip
     # re-tag the commit as npm pre-prends a v to the tag and we might tag without the v in github
     - run: git tag -f "${{ github.event.release.tag_name }}"
-    # force push the existing tag to GH
-    - run: git push --force origin refs/tags/${{ github.event.release.tag_name }}:refs/tags/${{ github.event.release.tag_name }}
     # push the changes on our current branch
     # TODO: this will fail if target_commitish is not a branch but rather a SHA
-    - run: git push --force origin ${{ github.event.release.target_commitish }}
+    # TODO: this will fail if target_commitish received new commits in the meantime, but that's kinda "expected behaviour"
+    - run: git push origin ${{ github.event.release.target_commitish }}
+    # force push the existing tag to GH
+    - run: git push --force origin refs/tags/${{ github.event.release.tag_name }}:refs/tags/${{ github.event.release.tag_name }}
