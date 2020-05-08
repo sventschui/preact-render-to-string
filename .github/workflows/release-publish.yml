@@ -11,7 +11,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
       with:
-        ref: "${{ event.release.target_commitish }}"
+        ref: "${{ github.event.release.target_commitish }}"
     - name: Use Node.js 12
       uses: actions/setup-node@v1
       with:
@@ -21,6 +21,6 @@ jobs:
     - run: npm test
       env:
         CI: true
-    - run: git tag -d "${{ event.release.tag_name }}"
-    - run: npm version "${{ event.release.tag_name }}"
-    - run: git push --force origin refs/tags/${{ event.release.tag_name }}:refs/tags/${{ event.release.tag_name }}
+    - run: git tag -d "${{ github.event.release.tag_name }}"
+    - run: npm version "${{ github.event.release.tag_name }}"
+    - run: git push --force origin refs/tags/${{ github.event.release.tag_name }}:refs/tags/${{ github.event.release.tag_name }}
