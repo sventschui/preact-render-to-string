@@ -11,7 +11,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
       with:
-        ref: "${{ github.event.release.target_commitish }}"
+        ref: ${{ github.event.release.target_commitish }}
     - name: Use Node.js 12
       uses: actions/setup-node@v1
       with:
@@ -25,7 +25,6 @@ jobs:
     - run: |
         git config --global user.email "bot@preactjs.com"
         git config --global user.name "preact bot"
-    - run: git tag -d "${{ github.event.release.tag_name }}"
     - run: npm version "${{ github.event.release.tag_name }}"
     - run: npm pack
     - run: echo "::set-env name=ASSET_PATH::$(ls preact-render-to-string-*.tgz)"
@@ -39,4 +38,6 @@ jobs:
         asset_path: ./${{ env.ASSET_PATH }}
         asset_name: ${{ env.ASSET_PATH }}
         asset_content_type: application/zip
+    - run: git tag -f "${{ github.event.release.tag_name }}"
     - run: git push --force origin refs/tags/${{ github.event.release.tag_name }}:refs/tags/${{ github.event.release.tag_name }}
+    - run: git push --force origin ${{ github.event.release.target_commitish }}
