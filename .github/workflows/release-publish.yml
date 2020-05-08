@@ -27,7 +27,7 @@ jobs:
       run: git fetch
     - name: ensure no commits were added to target_commitish in the meantime
       run: |
-        if [[ "$(git rev-list refs/tags/${{ github.event.release.tag_name }} | head -n 1)" != "$(git rev-list ${{ github.event.release.target_commitish }} | head -n 1)" ]]; then
+        if [[ "$(git rev-list tags/${{ github.event.release.tag_name }} | head -n 1)" != "$(git rev-list ${{ github.event.release.target_commitish }} | head -n 1)" ]]; then
           echo "Branch ${{ github.event.release.target_commitish }} is not in sync with tag ${{ github.event.release.tag_name }} !"
           exit 1
         fi
