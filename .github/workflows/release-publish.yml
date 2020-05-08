@@ -21,5 +21,6 @@ jobs:
     - run: npm test
       env:
         CI: true
+    - run: git tag -d "${{ event.release.tag_name }}"
     - run: npm version "${{ event.release.tag_name }}"
-    - run: git log -n 2
+    - run: git push --force origin refs/tags/${{ event.release.tag_name }}:refs/tags/${{ event.release.tag_name }}
