@@ -23,12 +23,16 @@ jobs:
     - run: npm test
       env:
         CI: true
-    # fetch all tags
-    - run: git fetch
-    # ensure no commits were added to target_commitish in the meantime
-    - run: |
-        if [[ "$(git rev-list refs/tags/${{ github.event.release.tag_name }} | head -n 1)" != "$(git rev-list ${{ github.event.release.target_commitish }} | head -n 1)" ]]
-    - run: |
+    - name: fetch all tags
+      run: git fetch
+    - name: ensure no commits were added to target_commitish in the meantime
+      run: |
+        if [[ "$(git rev-list refs/tags/${{ github.event.release.tag_name }} | head -n 1)" != "$(git rev-list ${{ github.event.release.target_commitish }} | head -n 1)" ]]; then
+          echo "Branch ${{ github.event.release.target_commitish }} is not in sync with tag ${{ github.event.release.tag_name }} !"
+          exit 1
+        fi
+    - name: configure git user
+      run: |
         git config --global user.email "bot@preactjs.com"
         git config --global user.name "preact bot"
     # Delete the existing tag as npm can't override git tags
