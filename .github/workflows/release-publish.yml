@@ -22,6 +22,9 @@ jobs:
       env:
         CI: true
     - run: git fetch
+    - run: |
+        git config --global user.email "bot@preactjs.com"
+        git config --global user.name "preact bot"
     - run: git tag -d "${{ github.event.release.tag_name }}"
     - run: npm version "${{ github.event.release.tag_name }}"
     - run: git push --force origin refs/tags/${{ github.event.release.tag_name }}:refs/tags/${{ github.event.release.tag_name }}
