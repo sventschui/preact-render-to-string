@@ -15,7 +15,7 @@ jobs:
         # Note that this current MUST be a branch, see TODO below
         ref: ${{ github.event.release.target_commitish }}
     - name: fetch all tags
-      run: git fetch
+      run: git fetch --tags
       # ensure no commits were added to target_commitish between creating the release and the checkout
     - name: ensure no commits were added to target_commitish
       run: |
